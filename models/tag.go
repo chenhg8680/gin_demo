@@ -39,6 +39,40 @@ func GetTagTotal(maps interface{}) (count int) {
 	return
 }
 
+//添加标签
+func AddTag(name string, createdOn string, state int) bool {
+	db.Create(&Tag{
+		Name:      name,
+		CreatedBy: createdOn,
+		State:     state,
+	})
+
+	return true
+}
+
+func EditTag(id int, data interface{}) bool {
+	db.Model(&Tag{}).Where("id = ?", id).Updates(data)
+	return true
+}
+
+func DeleteTag(id int) bool {
+	db.Where("id = ?", id).Delete(&Tag{})
+
+	return true
+}
+
+func ExistTagByID(id int) bool {
+	var tag Tag
+
+	db.Select("id").Where("id = ?", id).First(&tag)
+
+	if tag.ID > 0 {
+		return true
+	}
+
+	return false
+}
+
 //判断标签是否存在
 func ExistTagByName(name string) bool {
 	var tag Tag
@@ -50,15 +84,4 @@ func ExistTagByName(name string) bool {
 	}
 
 	return false
-}
-
-//添加标签
-func AddTag(name string, createdOn string, state int) bool {
-	db.Create(&Tag{
-		Name:      name,
-		CreatedBy: createdOn,
-		State:     state,
-	})
-
-	return true
 }
