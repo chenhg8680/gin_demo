@@ -80,7 +80,7 @@ func GetArticle(id int) (article Article) {
 
 func GetArticles(page int, size int, maps map[string]interface{}) (articles []Article) {
 
-	db.Preload("Tag").Where(maps).Offset(page).Limit(page).Find(&articles)
+	db.Preload("Tag").Where(maps).Offset(page).Limit(size).Find(&articles)
 	return
 }
 
