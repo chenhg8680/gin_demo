@@ -27,3 +27,8 @@ golang操作数据库是不是真的有必要使用ORM ?
 
 `HTML的渲染`
 ？
+
+
+`JWT`
+jwt auth cookie-session关系，区别，以及怎么选择。
+php有没有类似的机制？
