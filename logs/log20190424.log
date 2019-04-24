@@ -1,0 +1,3 @@
+[INFO][main.go:44]2019/04/24 18:30:10 [Shutdown Server ...]
+[INFO][main.go:54]2019/04/24 18:30:10 [Server exiting]
+[INFO][main.go:35]2019/04/24 18:30:10 [Listen http: Server closed]

@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"blog/pkg/e"
+	"blog/pkg/logging"
 	"blog/pkg/util"
 )
 
@@ -20,7 +21,7 @@ func JWT() gin.HandlerFunc {
 		token := c.Query("token")
 
 		if token == "" {
-			code := e.INVALID_PARAMS
+			code = e.INVALID_PARAMS
 		} else {
 			claims, err := util.ParseToken(token)
 
@@ -32,6 +33,7 @@ func JWT() gin.HandlerFunc {
 		}
 
 		if code != e.SUCCESS {
+			logging.Info(c.Request.RequestURI, e.GetMsg(code))
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"code": code,
 				"msg":  e.GetMsg(code),

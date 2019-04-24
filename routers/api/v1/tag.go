@@ -1,7 +1,7 @@
 package v1
 
 import (
-	"log"
+	"blog/pkg/logging"
 	"net/http"
 
 	"github.com/Unknwon/com"
@@ -34,7 +34,7 @@ func GetTags(c *gin.Context) {
 
 	code := e.SUCCESS
 
-	data["lists"] = models.GetTags(util.GetPage(c), setting.PageSize, maps)
+	data["lists"] = models.GetTags(util.GetPage(c), setting.AppSetting.PageSize, maps)
 	data["total"] = models.GetTagTotal(maps)
 
 	c.JSON(http.StatusOK, gin.H{
@@ -50,8 +50,6 @@ func AddTag(c *gin.Context) {
 	name := c.Query("name")
 	state := com.StrTo(c.DefaultQuery("state", "0")).MustInt()
 	createdBy := c.Query("created_by")
-
-	log.Println(name, state, createdBy)
 
 	//参数检测
 	valider := validation.Validation{}
@@ -73,7 +71,7 @@ func AddTag(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valider.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -103,7 +101,7 @@ func EditTag(c *gin.Context) {
 		valider.Range(state, 0, 1, "state").Message("状态只允许0或1")
 	}
 
-	log.Println(name, state, modifiedBy)
+	//log.Println(name, state, modifiedBy)
 
 	valider.Required(id, "id").Message("ID不能为空")
 	valider.MaxSize(name, 100, "name").Message("名称最长为100字符")
@@ -138,7 +136,7 @@ func EditTag(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valider.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -170,7 +168,7 @@ func DeleteTag(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valider.Errors {
-			log.Println(err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 

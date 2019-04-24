@@ -1,7 +1,7 @@
 package api
 
 import (
-	"log"
+	"blog/pkg/logging"
 	"net/http"
 
 	"github.com/astaxie/beego/validation"
@@ -13,8 +13,8 @@ import (
 )
 
 type auth struct {
-	Username string `valid:"Requird;MaxSize(50)"`
-	Password string `valid:"Requird;MaxSize(50)"`
+	Username string `valid:"Required;MaxSize(50)"`
+	Password string `valid:"Required;MaxSize(50)"`
 }
 
 func GetAuth(c *gin.Context) {
@@ -32,7 +32,6 @@ func GetAuth(c *gin.Context) {
 	code := e.INVALID_PARAMS
 
 	//log.Panicf("%s,%s", username, password)
-	//log.Panicln(ok, username, password)
 
 	if ok {
 		isExist := models.CheckAuth(username, password)
@@ -52,8 +51,7 @@ func GetAuth(c *gin.Context) {
 
 	} else {
 		for _, err := range valid.Errors {
-			log.Panicln(err.Key, err.Message)
-			log.Panicf("err key:%s,err msg:%s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 

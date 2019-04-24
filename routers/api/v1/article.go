@@ -1,7 +1,8 @@
 package v1
 
 import (
-	"log"
+	"blog/pkg/logging"
+
 	"net/http"
 
 	"github.com/Unknwon/com"
@@ -39,7 +40,7 @@ func GetArticle(c *gin.Context) {
 
 	} else {
 		for _, err := range valider.Errors {
-			log.Printf("err key:%s,err.massage:%s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -78,11 +79,11 @@ func GetArticles(c *gin.Context) {
 	if !valid.HasErrors() {
 		code = e.SUCCESS
 
-		data["list"] = models.GetArticles(util.GetPage(c), setting.PageSize, params)
+		data["list"] = models.GetArticles(util.GetPage(c), setting.AppSetting.PageSize, params)
 		data["total"] = models.GetArticleTotal(params)
 	} else {
 		for _, err := range valid.Errors {
-			log.Printf("err key:%s,err message:%s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -128,7 +129,7 @@ func AddArticle(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -197,7 +198,7 @@ func EditArticle(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			log.Panicf("err key:%s,err message:%s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 
@@ -226,7 +227,7 @@ func DeleteArticle(c *gin.Context) {
 		}
 	} else {
 		for _, err := range valid.Errors {
-			log.Printf("err.key: %s, err.message: %s", err.Key, err.Message)
+			logging.Info(err.Key, err.Message)
 		}
 	}
 

@@ -32,3 +32,27 @@ golang操作数据库是不是真的有必要使用ORM ?
 `JWT`
 jwt auth cookie-session关系，区别，以及怎么选择。
 php有没有类似的机制？
+
+
+`Go`组件包
+os
+fmt
+time
+log
+net/https
+
+
+####fmt函数
+Print 输出
+Preintln 输出多个值中间加空格 结尾加回车
+Printf 按格式输出
+
+Fprint
+Fprintln
+Fprintf
+####time
+
+####文件操作
+os
+io
+mime
